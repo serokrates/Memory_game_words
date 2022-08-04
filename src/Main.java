@@ -325,7 +325,7 @@ public class Main {
                 System.out.println();
             }
         }
-    public static void resultsOfTheGame(){
+    public static void resultsOfTheGame() throws IOException {
         File fileResults = new File("results.txt");
         try {
             try (BufferedReader br = new BufferedReader(new FileReader(fileResults))) {
@@ -356,6 +356,14 @@ public class Main {
         }
             for(int i = 0; i<10; i++) {
                 System.out.println(Arrays.toString(newScores[i]));
+                File f2 = new File("src/topscore.txt");
+                if(!f2.exists()) {
+                    f2.createNewFile();
+                }
+                FileWriter fileWritter = new FileWriter(f2.getName(),true);
+                BufferedWriter out = new BufferedWriter(fileWritter);
+                out.write(Arrays.toString(newScores[i])+"\r\n");
+                out.close();
             }
 
     }

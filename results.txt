@@ -6,3 +6,5 @@ ser Thu Aug 04 17:25:46 CEST 2022 5 1
 ser Thu Aug 04 17:25:46 CEST 2022 5 3
 ser Thu Aug 04 17:25:46 CEST 2022 5 2
 kakofonix Thu Aug 04 18:11:51 CEST 2022 7 8
+Ted Thu Aug 04 23:49:35 CEST 2022 28 8
+James Thu Aug 04 23:52:24 CEST 2022 25 8
