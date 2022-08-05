@@ -47,28 +47,28 @@ public class Main {
         Scanner inputt = new Scanner(System.in);
         String diff = inputt.next();
         Pattern p = Pattern.compile("easy||hard");
-        while(!isValidCode(diff,p)){
+        while (!isValidCode(diff, p)) {
             System.out.println("Please provide correct answer: easy or hard");
             System.out.println("Choose difficulty level: easy or hard");
             inputt = new Scanner(System.in);
             diff = inputt.next();
-            isValidCode(diff,p);
+            isValidCode(diff, p);
         }
 
-        if(diff.equals("easy")){
+        if (diff.equals("easy")) {
             chances = 10;
             String[] arrayWords = words.toArray(new String[0]);
-            Random r=new Random();
+            Random r = new Random();
             for (int i = 1; i <= 4; i++) {
-                int randomNumber=r.nextInt(arrayWords.length);
+                int randomNumber = r.nextInt(arrayWords.length);
                 selectedArrayWords.add(arrayWords[randomNumber]);
             }
-        }else if(diff.equals("hard")){
+        } else if (diff.equals("hard")) {
             chances = 15;
             String[] arrayWords = words.toArray(new String[0]);
-            Random r=new Random();
+            Random r = new Random();
             for (int i = 1; i <= 8; i++) {
-                int randomNumber=r.nextInt(arrayWords.length);
+                int randomNumber = r.nextInt(arrayWords.length);
                 selectedArrayWords.add(arrayWords[randomNumber]);
             }
         }
@@ -80,72 +80,89 @@ public class Main {
         int b = 1;
         int bb = 1;
         int dL = 0;
-        p = Pattern.compile("^A[0-9]$|^A[1-" + bb + "][0-9]$|^A[" + b + "][" + dL + "]$|");;
+        p = Pattern.compile("^A[0-9]$|^A[1-" + bb + "][0-9]$|^A[" + b + "][" + dL + "]$|");
+        ;
         if (c >= 10) {
             b = c / 10;
             bb = b - 1;
             dL = c - (b * 10);
-            if(c<100){
+            if (c < 100) {
                 p = Pattern.compile("^A[0-9]$|^A[1-" + bb + "][0-9]$|^A[" + b + "][0-" + dL + "]$|^B[0-9]$|^B[1-" + bb + "][0-9]$|^B[" + b + "][0-" + dL + "]$");
-            }else {
+            } else {
                 p = Pattern.compile("^A[0-9]$|^A[0-9][0-9]$|^A(100)$|^B[0-9]$|^B[0-9][0-9]$|^B(100)$");
             }
-        }
-        else{
+        } else {
             p = Pattern.compile("^A[0-9]$|^B[0-9]$");
         }
         cardsArray = createMap(c, cards);
         board(c, cardsArray, updatedPg);
-        System.out.println(" board(c, cardsArray, updatedPg);");
         Date startDate = new Date();
-        for(int ii = 0; ii< chances; ii++) {
+        for (int ii = 0; ii < chances; ii++) {
             choosingCord(cardsArray, arrayWords, p, c);
-            if(checkW(updatedPg)){
+            if (checkW(updatedPg)) {
                 endDate = new Date();
                 break;
             }
         }
-        int numSeconds = (int)((endDate.getTime() - startDate.getTime()) / 1000);
+        int numSeconds = (int) ((endDate.getTime() - startDate.getTime()) / 1000);
 
-        System.out.println("You solved the memory game after "+countToWin+" chances. It took you "+numSeconds+" seconds");
+        System.out.println("You solved the memory game after " + countToWin + " chances. It took you " + numSeconds + " seconds");
         System.out.println("Do you want to save the results? (Y/N)");
 
         Scanner resultsCode = new Scanner(System.in);
         String resultsAnswer = resultsCode.next();
         p = Pattern.compile("^Y$|^N$");
 
-        while(!isValidCode(resultsAnswer,p)){
+        while (!isValidCode(resultsAnswer, p)) {
             System.out.println("Do you want to save the results? (Y/N)");
             resultsCode = new Scanner(System.in);
             resultsAnswer = resultsCode.next();
             p = Pattern.compile("^Y$|^N$");
-            isValidCode(resultsAnswer,p);
+            isValidCode(resultsAnswer, p);
         }
-        if(resultsAnswer.equals("Y")){
+        if (resultsAnswer.equals("Y")) {
             System.out.println("What is your your name?");
             resultsCode = new Scanner(System.in);
             String name = resultsCode.next();
 
 
             File f1 = new File("src/results.txt");
-            if(!f1.exists()) {
+            if (!f1.exists()) {
                 f1.createNewFile();
             }
-            FileWriter fileWritter = new FileWriter(f1.getName(),true);
+            FileWriter fileWritter = new FileWriter(f1.getName(), true);
             BufferedWriter out = new BufferedWriter(fileWritter);
 //
 //            PrintWriter out = new PrintWriter("src/results.txt");
             long millis = System.currentTimeMillis();
             java.util.Date dateDay = new java.util.Date(millis);
-            out.write(name+" "+dateDay+" "+numSeconds+" "+countToWin+ "\r\n");
+            out.write(name + " " + dateDay + " " + numSeconds + " " + countToWin + "\r\n");
             out.close();
-        }else if(resultsAnswer.equals("N")){
+        } else if (resultsAnswer.equals("N")) {
 
         }
         System.out.println("THANK YOU FOR PLAYING :)");
         System.out.println("---------------------TOP SCORES---------------------");
         resultsOfTheGame();
-
+        System.out.println("do you want to play again? (Y/N)");
+        resultsCode = new Scanner(System.in);
+        resultsAnswer = resultsCode.next();
+        p = Pattern.compile("^Y$|^N$");
+        isValidCode(resultsAnswer, p);
+        while(!isValidCode(resultsAnswer, p)) {
+            System.out.println("do you want to play again? (Y/N)");
+            resultsCode = new Scanner(System.in);
+            resultsAnswer = resultsCode.next();
+            p = Pattern.compile("^Y$|^N$");
+            isValidCode(resultsAnswer, p);
+        }
+        if (resultsAnswer.equals("Y")) {
+            isboardSet=false;
+            selectedArrayWords = new ArrayList<String>();
+            arrayWords = null;
+            once = true;
+            main(args);
+        }
     }
     public static boolean isValidCode (String code, Pattern p) {
         boolean check = p.matcher(code).matches();
@@ -177,6 +194,7 @@ public class Main {
         int intValone = 0;
         int intAbvalone = 0;
         while (!isChosenfirst) {
+            System.out.println("Choose first coordinates");
             Scanner input = new Scanner(System.in);
             String firstcor = input.next();
 
@@ -345,13 +363,13 @@ public class Main {
             splitCombined[row] = split;
         }
         scores = new int[splitCombined.length][2];
-        for(int i = 0; i<splitCombined.length; i++) {
+        for(int i = 0; i<splitCombined.length-1; i++) {
             scores[i][1]=i;
             scores[i][0]=Integer.parseInt(splitCombined[i][8]);
         }
         Arrays.sort(scores, (a, b) -> Integer.compare(b[0],a[0]));
         newScores = new String[10][splitCombined[1].length];
-        for(int i = 0; i<scores.length; i++) {
+        for(int i = 0; i<newScores.length; i++) {
             newScores[i]=splitCombined[scores[i][1]];
         }
             for(int i = 0; i<10; i++) {
